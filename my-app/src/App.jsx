@@ -1,12 +1,21 @@
-import './App.css'
+import { BrowserRouter, Routes, Route } from "react-router-dom";
 
-function App() {
+import Home from "./pages/Home.jsx";
+import SubscriptionSelect from "./pages/MockCustomer/SubscriptionSelect";
+import CreateCustomer from "./pages/MockCustomer/CreateCustomer";
+import CustomerServicePortal from './pages/CustomerServicePortal'
 
+export default function App() {
   return (
-    <>
-    <p> PlaceHolder </p>
-    </>
-  )
-}
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
 
-export default App
+        <Route path="/mock/subscriptions" element={<SubscriptionSelect />} />
+        <Route path="/mock/create" element={<CreateCustomer />} />
+
+       <Route path="/csr" element={<CustomerServicePortal />} />
+      </Routes>
+    </BrowserRouter>
+  );
+}
