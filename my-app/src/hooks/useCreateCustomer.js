@@ -35,7 +35,7 @@ export function useCreateCustomer() {
 
   const submit = async () => {
     if (!form.name || !form.email || !form.phone)
-      return alert("Fill customer info");
+      return alert("Complete customer information");
 
     for (const car of cars) {
       if (!car.vin || !car.make || !car.model || !car.planId)
