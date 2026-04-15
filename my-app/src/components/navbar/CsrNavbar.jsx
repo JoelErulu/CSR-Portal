@@ -1,25 +1,46 @@
 import { NavLink } from "react-router-dom";
 
 export default function CsrNavbar() {
+  const linkClass = ({ isActive }) =>
+    `nav-link d-flex align-items-center rounded px-3 py-2 ${
+      isActive ? "active fw-bold bg-primary text-white" : "text-dark"
+    }`;
+
   return (
-    <div className="bg-white border-end d-flex flex-column p-4 shadow-sm">
-      <div className="d-flex align-items-center mb-5 ps-2">
-        <h5 className="mb-0 text-dark fw-bold">CSR Panel</h5>
+    <>
+      {/* MOBILE TOP BAR */}
+      <div className="d-flex d-md-none justify-content-between align-items-center bg-white border-bottom shadow-sm px-3 py-2 sticky-top">
+        <h6 className="mb-0 fw-bold">CSR Panel</h6>
+
+        <nav className="nav gap-2">
+          <NavLink to="/" className={linkClass}>
+            📊 <span className="ms-1">Dashboard</span>
+          </NavLink>
+
+          <NavLink to="/mock/create" className={linkClass}>
+            👤 <span className="ms-1">Create</span>
+          </NavLink>
+        </nav>
       </div>
 
-      <nav className="nav nav-pills flex-column flex-grow-1">
-        <small className="text-uppercase text-muted fw-bold mb-3 ps-2">
-          Main Menu
-        </small>
+      {/* DESKTOP SIDEBAR */}
+      <div className="d-none d-md-flex flex-column bg-white border-end shadow-sm p-3 vh-100 position-sticky top-0" style={{ width: "240px" }}>
+        <h5 className="fw-bold mb-4 px-2">CSR Panel</h5>
 
-        <NavLink to="/" className="nav-link mb-2 py-2 px-3">
-          📊 Dashboard
-        </NavLink>
+        <nav className="nav flex-column gap-1">
+          <small className="text-uppercase text-muted fw-bold mb-2 px-2">
+            Main Menu
+          </small>
 
-        <NavLink to="/mock/create" className="nav-link mb-2 py-2 px-3">
-          👤 Create Mock
-        </NavLink>
-      </nav>
-    </div>
+          <NavLink to="/" className={linkClass}>
+            📊 <span className="ms-2">Dashboard</span>
+          </NavLink>
+
+          <NavLink to="/mock/create" className={linkClass}>
+            👤 <span className="ms-2">Create Mock</span>
+          </NavLink>
+        </nav>
+      </div>
+    </>
   );
 }

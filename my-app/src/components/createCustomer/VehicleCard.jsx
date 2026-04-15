@@ -57,17 +57,6 @@ export default function VehicleCard({
           ))}
         </select>
 
-        <select
-          className="form-select"
-          name="washType"
-          value={car.washType}
-          onChange={(e) => onChange(index, e)}
-        >
-          <option value="">Wash Type</option>
-          <option value="basic">Basic</option>
-          <option value="premium">Premium</option>
-          <option value="ultimate">Ultimate</option>
-        </select>
       </div>
     </div>
   );

@@ -3,9 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { createCustomer } from "../firebase/customerService";
 import { getPlans } from "../firebase/planService";
 
-import CsrSidebar from "../components/navbar/CsrNavbar";
+import CsrNavbar from "../components/navbar/CsrNavbar";
 import CustomerForm from "../components/createCustomer/CustomerForm";
 import VehicleSection from "../components/createCustomer/VehicleSection";
+import Header from "../components/createCustomer/Header";
 
 export default function CreateCustomer() {
   const navigate = useNavigate();
@@ -49,16 +50,11 @@ export default function CreateCustomer() {
 
     try {
       setLoading(true);
-
       await createCustomer({
         ...form,
         active: true,
-        cars: cars.map((c) => ({
-          ...c,
-          subscriptionActive: true,
-        })),
+        cars: cars.map((c) => ({ ...c, subscriptionActive: true })),
       });
-
       navigate("/");
     } catch (err) {
       alert(err.message);
@@ -67,45 +63,35 @@ export default function CreateCustomer() {
     }
   };
 
-  return (
-    <div className="d-flex bg-light min-vh-100">
-      <CsrSidebar />
+return (
+   <div className="d-flex flex-column min-vh-100 bg-light">
+          <div className="d-flex flex-column flex-md-row">
+                <CsrNavbar />
 
-      <div className="flex-grow-1 p-4">
-        <div className="container" style={{ maxWidth: 900 }}>
-
-          <Header />
-
-          <div className="row g-4">
-            <div className="col-lg-5">
-              <CustomerForm form={form} onChange={handleFormChange} />
-            </div>
-
-            <div className="col-lg-7">
-              <VehicleSection
-                cars={cars}
-                plans={plans}
-                onChange={handleCarChange}
-                onAdd={addCar}
-                onRemove={removeCar}
-                onSubmit={submit}
-                loading={loading}
-                onCancel={() => navigate("/")}
-              />
-            </div>
+    <div className="flex-grow-1 p-4">
+      <div className="container" style={{ maxWidth: 900 }}>
+        <Header />
+        <div className="row g-4">
+          <div className="col-lg-5">
+            <CustomerForm form={form} onChange={handleFormChange} />
           </div>
-
+          <div className="col-lg-7">
+            <VehicleSection
+              cars={cars}
+              plans={plans}
+              onChange={handleCarChange}
+              onAdd={addCar}
+              onRemove={removeCar}
+              onSubmit={submit}
+              loading={loading}
+              onCancel={() => navigate("/")}
+            />
+          </div>
         </div>
       </div>
     </div>
-  );
-}
+  </div>
+  </div>
+);
 
-function Header() {
-  return (
-    <div className="mb-4">
-      <h2 className="fw-bold">Onboard A New Customer</h2>
-      <p className="text-muted">Register a new client</p>
-    </div>
-  );
 }
