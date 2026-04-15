@@ -14,7 +14,6 @@ const getCustomersCol = () => collection(db, "customers");
 export const createCustomer = async (data) => {
   return await addDoc(getCustomersCol(), {
     ...data,
-    active: true,
     createdAt: serverTimestamp(),
   });
 };

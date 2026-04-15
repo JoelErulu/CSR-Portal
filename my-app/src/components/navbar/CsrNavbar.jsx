@@ -17,7 +17,7 @@ export default function CsrNavbar() {
             📊 <span className="ms-1">Dashboard</span>
           </NavLink>
 
-          <NavLink to="/mock/create" className={linkClass}>
+          <NavLink to="/create" className={linkClass}>
             👤 <span className="ms-1">Create</span>
           </NavLink>
         </nav>
@@ -36,7 +36,7 @@ export default function CsrNavbar() {
             📊 <span className="ms-2">Dashboard</span>
           </NavLink>
 
-          <NavLink to="/mock/create" className={linkClass}>
+          <NavLink to="/create" className={linkClass}>
             👤 <span className="ms-2">Create Mock</span>
           </NavLink>
         </nav>

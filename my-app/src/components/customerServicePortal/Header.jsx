@@ -8,7 +8,7 @@ export default function Header({ search, setSearch }) {
         </p>
       </div>
 
-      <div className="col-12 col-md-4">
+      <div className="col-12 col-md-8">
         <input
           className="form-control form-control-lg border-0 shadow-sm"
           placeholder="Search..."

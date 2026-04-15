@@ -19,7 +19,7 @@ import {
   getCustomers,
   getCustomerById,
   updateCustomer,
-} from "./customerService";
+} from "../customerService";
 
 import {
   addDoc,

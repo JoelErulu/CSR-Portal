@@ -10,7 +10,7 @@ export default function App() {
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<CustomerServicePortal />} />
-        <Route path="/mock/create" element={<CreateCustomer />} />
+        <Route path="/create" element={<CreateCustomer />} />
         <Route path="/customers/:id" element={<CustomerDetails />} />
       </Routes>
     </BrowserRouter>

@@ -1,7 +1,5 @@
-import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { createCustomer } from "../firebase/customerService";
-import { getPlans } from "../firebase/planService";
+import { useCreateCustomer } from "../hooks/useCreateCustomer";
 
 import CsrNavbar from "../components/navbar/CsrNavbar";
 import CustomerForm from "../components/createCustomer/CustomerForm";
@@ -10,88 +8,45 @@ import Header from "../components/createCustomer/Header";
 
 export default function CreateCustomer() {
   const navigate = useNavigate();
+  const {
+    form,
+    cars,
+    plans,
+    loading,
+    handleFormChange,
+    handleCarChange,
+    addCar,
+    removeCar,
+    submit,
+  } = useCreateCustomer();
 
-  const [form, setForm] = useState({ name: "", email: "", phone: "" });
-  const [cars, setCars] = useState([
-    { vin: "", make: "", model: "", planId: "", washType: "" },
-  ]);
-  const [plans, setPlans] = useState([]);
-  const [loading, setLoading] = useState(false);
-
-  useEffect(() => {
-    getPlans().then(setPlans);
-  }, []);
-
-  const handleFormChange = (e) =>
-    setForm((prev) => ({ ...prev, [e.target.name]: e.target.value }));
-
-  const handleCarChange = (index, e) => {
-    const { name, value } = e.target;
-    setCars((prev) => {
-      const updated = [...prev];
-      updated[index][name] = value;
-      return updated;
-    });
-  };
-
-  const addCar = () =>
-    setCars((prev) => [...prev, { vin: "", make: "", model: "", planId: "", washType: "" }]);
-
-  const removeCar = (index) =>
-    setCars((prev) => prev.filter((_, i) => i !== index));
-
-  const submit = async () => {
-    if (!form.name || !form.email || !form.phone) return alert("Fill customer info");
-
-    for (const car of cars) {
-      if (!car.vin || !car.make || !car.model || !car.planId)
-        return alert("Fill all vehicle fields");
-    }
-
-    try {
-      setLoading(true);
-      await createCustomer({
-        ...form,
-        active: true,
-        cars: cars.map((c) => ({ ...c, subscriptionActive: true })),
-      });
-      navigate("/");
-    } catch (err) {
-      alert(err.message);
-    } finally {
-      setLoading(false);
-    }
-  };
-
-return (
-   <div className="d-flex flex-column min-vh-100 bg-light">
-          <div className="d-flex flex-column flex-md-row">
-                <CsrNavbar />
-
-    <div className="flex-grow-1 p-4">
-      <div className="container" style={{ maxWidth: 900 }}>
-        <Header />
-        <div className="row g-4">
-          <div className="col-lg-5">
-            <CustomerForm form={form} onChange={handleFormChange} />
-          </div>
-          <div className="col-lg-7">
-            <VehicleSection
-              cars={cars}
-              plans={plans}
-              onChange={handleCarChange}
-              onAdd={addCar}
-              onRemove={removeCar}
-              onSubmit={submit}
-              loading={loading}
-              onCancel={() => navigate("/")}
-            />
+  return (
+    <div className="d-flex flex-column min-vh-100 bg-light">
+      <div className="d-flex flex-column flex-md-row">
+        <CsrNavbar />
+        <div className="flex-grow-1 p-4">
+          <div className="container" style={{ maxWidth: 900 }}>
+            <Header />
+            <div className="row g-4">
+              <div className="col-lg-5">
+                <CustomerForm form={form} onChange={handleFormChange} />
+              </div>
+              <div className="col-lg-7">
+                <VehicleSection
+                  cars={cars}
+                  plans={plans}
+                  onChange={handleCarChange}
+                  onAdd={addCar}
+                  onRemove={removeCar}
+                  onSubmit={submit}
+                  loading={loading}
+                  onCancel={() => navigate("/")}
+                />
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
-  </div>
-);
-
+  );
 }
